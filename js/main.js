@@ -15,10 +15,27 @@ let board = [
     ["X", "", "X", "", "X", "", "X", ""]
 ]
 
+function move(player, rx, ry, x, y) {
+    board[rx][ry] = ""
+    board[x][y] = "X"
+    // board[x][y] = "a"
+}
 
-function createBlack() {
+function legalMove(player, rx, ry, x, y, i) {
+    gameArea.innerHTML = ""
+    board[rx][ry] = ""
+    board[x][y] = "X"
+    Draw()
+    console.log(board);
+    console.log(i);
+}
+
+
+
+function createBlack(id) {
     let blackBoard = document.createElement("div")
-    blackBoard.classList = "black droptarget"
+    blackBoard.classList = "black"
+    blackBoard.id = id
     blackBoard.setAttribute("corX", 3)
     return blackBoard;
 }
@@ -65,7 +82,8 @@ function Draw() {
                 let white = createWhite()
                 gameArea.append(white)
             } else {
-                let black = createBlack()
+                let cor = `b${i}${j}`
+                let black = createBlack(cor)
                 if (board[i][j] == "X") {
                     let coordinate = `${i}${j}` // 0 + 1 = 1
                     black.append(whitePiece(coordinate))
@@ -76,27 +94,44 @@ function Draw() {
             }
         }
     }
+
+
+    for (let index = 0; index < blackPieces.length; index++) {
+        blackPieces[index].addEventListener("drag", function (e) {
+            e.preventDefault()
+            console.log(index);
+
+        })
+    }
+
+
+    for (let index = 0; index < blackPieces.length; index++) {
+        blackPieces[index].addEventListener("dragover", function (e) {
+            e.preventDefault()
+        })
+    }
+
+    for (let index = 0; index < whitePieces.length; index++) {
+        whitePieces[index].addEventListener("dragstart", function (e) {
+            e.dataTransfer.setData("a", e.target.id);
+        })
+    }
+
+    for (let index = 0; index < blackPieces.length; index++) {
+        blackPieces[index].addEventListener("drop", function (e) {
+            e.preventDefault()
+            var data = e.dataTransfer.getData("a");
+            let findCoordinate = e.target.id.split("")
+            let removeCoordinate = data.split("")
+            e.target.append(document.getElementById(data))
+            console.log("__________________");
+            console.log(removeCoordinate[0]);
+            console.log(removeCoordinate[1]);
+            console.log("__________________");
+            legalMove(true, removeCoordinate[0], removeCoordinate[1], findCoordinate[1], findCoordinate[2],index)
+            // console.log(board);
+
+        })
+    }
 }
 Draw()
-
-
-for (let index = 0; index < blackPieces.length; index++) {
-    blackPieces[index].addEventListener("dragover", function (e) {
-        e.preventDefault()
-    })
-}
-
-for (let index = 0; index < whitePieces.length; index++) {
-    whitePieces[index].addEventListener("dragstart", function (e) {
-        e.dataTransfer.setData("a", e.target.id);
-    })
-}
-
-for (let index = 0; index < blackPieces.length; index++) {
-    blackPieces[index].addEventListener("drop", function (e) {
-        e.preventDefault()
-        var data = e.dataTransfer.getData("a");
-        e.target.append(document.getElementById(data))
-    })
-}
-
