@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#checkerArea {
+  width: 960px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+}
+#checkerArea .white {
+  background-color: #f1f2f6;
+  width: 120px;
+  height: 120px;
+}
+#checkerArea .black {
+  background-color: #2f3542;
+  width: 120px;
+  height: 120px;
+  color: #f1f2f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#checkerArea .black .whitePiece {
+  width: 100px;
+  height: 100px;
+}
+#checkerArea .black .whitePiece img {
+  width: 100%;
+  height: 100%;
+}
+#checkerArea .black .blackPiece {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+#checkerArea .black .blackPiece img {
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */
